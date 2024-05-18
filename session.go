@@ -3,20 +3,15 @@ package csvq
 import (
 	"context"
 	"io"
-	"sync"
 
 	"github.com/mithrandie/csvq/lib/query"
 )
 
-var session *query.Session
-var getSessionOnce sync.Once
-
 func getSession() *query.Session {
-	getSessionOnce.Do(func() {
-		session = query.NewSession()
-		session.SetStdout(&query.Discard{})
-		session.SetStderr(&query.Discard{})
-	})
+	session := query.NewSession()
+	session.SetStdout(&query.Discard{})
+	session.SetStderr(&query.Discard{})
+
 	return session
 }
 
